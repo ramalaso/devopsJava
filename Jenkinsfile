@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ('Build') {
             agent {
-                docker {image '${ID}:v1.1'}
+                docker {image 'openjdk:alpine'}
             }
             steps {
                 sh 'chmod +x gradlew'
@@ -83,7 +83,7 @@ pipeline {
     }
     post {
         always {
-             echo 'Execute when it success'
+             echo 'Execute always'
         }
         failure {
             cleanWs deleteDirs: true, notFailBuild: true
@@ -91,9 +91,5 @@ pipeline {
                      subject: 'Build Notification: ${JOB_NAME}-Build# ${BUILD_NUMBER} ${currentBuild.result}',
                      to: 'raul.laredo@fundacion-jala.org'
         }
-        success {
-            echo 'Execute when it success'
-        }
     }
-    
 } 
